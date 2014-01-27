@@ -10,6 +10,10 @@ Just set up your host , port , pats and filename . use gcc to compile the script
 
     gcc main.c -o bam
   
-then ./bam -start to execute the script
+then 
+
+    ./bam -start 
+
+to execute the script
 
 
