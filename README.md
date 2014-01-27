@@ -6,7 +6,7 @@ A simple script to creat a backdoor using meterpreter . it can run under Kali li
 How to use it ?
 ===
 
-Just set up your host , port , pats and filename . use gcc to compile the script .
+Just set up your host , port , path and filename . use gcc to compile the script .
 
     gcc main.c -o bam
   
